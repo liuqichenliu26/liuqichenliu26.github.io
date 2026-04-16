@@ -1,0 +1,291 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>警情警力分析</title>
+<link href="css/style.css" rel="stylesheet" type="text/css" media="all" />
+<script src="js/jquery-3.2.0.min.js" charset="utf-8" type="text/javascript"></script>
+<script src="js/echarts.min.js" charset="utf-8" type="text/javascript"></script>
+<script src="js/utils.js" charset="utf-8" type="text/javascript"></script>
+
+<body>
+    <div class="wpbox">
+        <div class="bnt">
+            <div class="topbnt_left fl">
+                <ul>
+                    <!-- <li class="active"><a href="https://gitee.com/iGaoWei/big-data-view">警情警力</a></li> -->
+                    <li><a href="https://gitee.com/iGaoWei/big-data-view">古建保护</a></li>
+                    <li><a href="https://gitee.com/iGaoWei/big-data-view">文化旅游</a></li>
+                    <li><a href="https://gitee.com/iGaoWei/big-data-view">智慧景区</a></li>
+                </ul>
+            </div>
+            <h1 class="tith1 fl">保护与旅游大数据分析</h1>
+            <div class=" fr topbnt_right">
+                <ul>
+                    <li><a href="https://gitee.com/iGaoWei/big-data-view">文物监测</a></li>
+                    <li><a href="https://gitee.com/iGaoWei/big-data-view">游客分析</a></li>
+                    <li class="active"><a href="https://gitee.com/iGaoWei/big-data-view">数据中心</a></li>
+                </ul>
+            </div>
+        </div>
+        <!-- bnt end -->
+        <div class="left1">
+            <div class="aleftboxttop">
+                <h2 class="tith2">古建筑维护与保护</h2>
+                <div class="lefttoday_tit" style=" height:8%">
+                    <p class="fl">地区：苏州山塘街</p>
+                    <p class="fr time-display">时间段：<span class="current-time"></span></p>
+                </div>
+                <div class="lefttoday_number">
+                    <div class="widget-inline-box text-center fl">
+                        <p>总维护数</p>
+                        <h3 class="ceeb1fd">89</h3>
+                        <h4 class="text-muted pt6">环比<img src="img/iconup.png" height="16" />5%</h4>
+                    </div>
+                    <div class="widget-inline-box text-center fl">
+                        <p>已完成</p>
+                        <h3 class="c24c9ff">76</h3>
+                        <h4 class="text-muted pt6">环比<img src="img/iconup.png" height="16" />8%</h4>
+                    </div>
+                    <div class="widget-inline-box text-center fl">
+                        <p>进行中</p>
+                        <h3 class="cffff00">13</h3>
+                        <h4 class="text-muted pt6">环比<img src="img/icondown.png" height="16" />2%</h4>
+                    </div>
+                    <div class="widget-inline-box text-center fl">
+                        <p>待处理</p>
+                        <h3 class="c11e2dd">5</h3>
+                        <h4 class="text-muted pt6">环比<img src="img/icondown.png" height="16" />3%</h4>
+                    </div>
+                </div>
+                <!-- lefttoday_number end -->
+            </div>
+            <div class="aleftboxtmidd">
+                <h2 class="tith2">文物监测</h2>
+                <div class="lefttoday_tit height ht">
+                    <p class="fl">地区：苏州山塘街</p>
+                    <p class="fr time-display">时间段：<span class="current-time"></span></p>
+                </div>
+                <div id="aleftboxtmidd" class="aleftboxtmiddcont"></div>
+            </div>
+            <div class="aleftboxtbott">
+                <h2 class="tith2">游客流量分析</h2>
+                <div class="lefttoday_tit height">
+                    <p class="fl">地区：苏州山塘街</p>
+                    <p class="fr time-display">时间段：<span class="current-time"></span></p>
+                </div>
+                <div id="aleftboxtbott" class="aleftboxtbott_cont"></div>
+            </div>
+        </div>
+        <!--  left1 end -->
+        <div class="mrbox">
+            <div class="mrbox_topmidd" style="width: 69%;">
+                <div class="amiddboxttop">
+                    <h2 class="tith2 pt1">苏州山塘街古建筑群</h2>
+                    <div class="amiddboxttop_map" style="">
+                        <span class="camera_l" style=" top:34%;left:32%;" title="古建筑监测点1"></span>
+                        <span class="camera_l" style=" top:10%;left:10%;" title="古建筑监测点2"></span>
+                        <span class="camera_l" style=" top:5%;left:40%;" title="古建筑监测点3"></span>
+                        <span class="camera_l" style=" top:10%;left:50%;" title="古建筑监测点4"></span>
+                        <span class="camera_l" style=" top:30%;left:75%;" title="古建筑监测点5"></span>
+                        <span class="camera_l" style=" top:5%;left:92%;" title="古建筑监测点6"></span>
+                        <span class="camera_l" style=" top:40%;left:83%;" title="古建筑监测点7"></span>
+                    </div>
+                </div>
+                <!--  amiddboxttop end-->
+                <div class="amidd_bott">
+                    <div class="amiddboxtbott1 fl">
+                        <h2 class="tith2 pt1">文化旅游</h2>
+                        <div id="amiddboxtbott1" class="amiddboxtbott1content"></div>
+                    </div>
+
+                    <div class="amiddboxtbott2 fl">
+                        <h2 class="tith2 pt1">古建管理</h2>
+                        <div id="amiddboxtbott2" class="amiddboxtbott2content"></div>
+                    </div>
+                </div>
+                <!-- amidd_bott end -->
+            </div>
+            <!-- mrbox_top end -->
+            <div class="mrbox_top_right">
+                <div class="arightboxtop">
+                    <h2 class="tith2">古建筑参观预约</h2>
+                    <div class="lefttoday_tit">
+                        <p class="fl">地区：苏州山塘街</p>
+                        <p class="fr time-display">时间段：<span class="current-date"></span></p>
+                    </div>
+                    <div class="zhtc_table_title">
+                        <div>预约号</div>
+                        <!-- 预约号 -->
+                        <div>参观时间</div>
+                        <!-- 参观时间 -->
+                        <div>景点</div>
+                        <!-- 景点 -->
+                        <div>状态</div>
+                        <!-- 状态 -->
+                    </div>
+                    <div id="zhtc_table" class="left2_table">
+                        <ul>
+                            <li>
+                                <p class="fl"><b>山塘街景区</b>
+                                </p>
+                                <div class="zhtc_table_li_content">
+                                    <div>Y20240623001</div>
+                                    <div>2026-03-23 <br/> 09:30</div>
+                                    <div>玉涵堂</div>
+                                    <div>已确认</div>
+                                </div>
+                            </li>
+                            <li class="bg">
+                                <p class="fl"><b>山塘街景区</b>
+                                </p>
+                                <div class="zhtc_table_li_content">
+                                    <div>Y20240623002</div>
+                                    <div>2024-06-23 <br/> 10:00</div>
+                                    <div>古戏台</div>
+                                    <div>已确认</div>
+                                </div>
+                            </li>
+                            <li>
+                                <p class="fl"><b>山塘街景区</b>
+                                </p>
+                                <div class="zhtc_table_li_content">
+                                    <div>Y20240623003</div>
+                                    <div>2024-06-23 <br/> 10:30</div>
+                                    <div>通贵桥</div>
+                                    <div>已确认</div>
+                                </div>
+                            </li>
+                            <li class="bg">
+                                <p class="fl"><b>山塘街景区</b>
+                                </p>
+                                <div class="zhtc_table_li_content">
+                                    <div>Y20240623004</div>
+                                    <div>2024-06-23 <br/> 11:00</div>
+                                    <div>山塘老街</div>
+                                    <div>待确认</div>
+                                </div>
+                            </li>
+                            <li>
+                                <p class="fl"><b>山塘街景区</b>
+                                </p>
+                                <div class="zhtc_table_li_content">
+                                    <div>Y20240623005</div>
+                                    <div>2024-06-23 <br/> 14:00</div>
+                                    <div>玉涵堂</div>
+                                    <div>已确认</div>
+                                </div>
+                            </li>
+                            <li class="bg">
+                                <p class="fl"><b>山塘街景区</b>
+                                </p>
+                                <div class="zhtc_table_li_content">
+                                    <div>Y20240623006</div>
+                                    <div>2024-06-23 <br/> 14:30</div>
+                                    <div>古戏台</div>
+                                    <div>已确认</div>
+                                </div>
+                            </li>
+                            <li>
+                                <p class="fl"><b>山塘街景区</b>
+                                </p>
+                                <div class="zhtc_table_li_content">
+                                    <div>Y20240623007</div>
+                                    <div>2024-06-23 <br/> 15:00</div>
+                                    <div>通贵桥</div>
+                                    <div>待确认</div>
+                                </div>
+                            </li>
+                            <li class="bg">
+                                <p class="fl"><b>山塘街景区</b>
+                                </p>
+                                <div class="zhtc_table_li_content">
+                                    <div>Y20240623008</div>
+                                    <div>2024-06-23 <br/> 15:30</div>
+                                    <div>山塘老街</div>
+                                    <div>已确认</div>
+                                </div>
+                            </li>
+                            <li>
+                                <p class="fl"><b>山塘街景区</b>
+                                </p>
+                                <div class="zhtc_table_li_content">
+                                    <div>Y20240623009</div>
+                                    <div>2024-06-23 <br/> 16:00</div>
+                                    <div>玉涵堂</div>
+                                    <div>已确认</div>
+                                </div>
+                            </li>
+
+
+                        </ul>
+                    </div>
+
+                </div>
+                <div class="arightboxbott">
+                    <h2 class="tith2 ">古建筑信息</h2>
+                    <div class="lefttoday_tit">
+                        <p class="fl">地区：苏州山塘街</p>
+                        <p class="fr time-display">时间段：<span class="current-time"></span></p>
+                    </div>
+                    <div id="arightboxbott" class="arightboxbottcont"></div>
+                </div>
+            </div>
+            <!-- mrbox_top_right end -->
+        </div>
+
+    </div>
+    </div>
+
+    <script type="text/javascript" src="js/安防设备.js"></script>
+
+    <script type="text/javascript" src="js/水电费用.js"></script>
+
+    <script type="text/javascript" src="js/社区电商.js"></script>
+
+    <script type="text/javascript" src="js/智慧物业.js"></script>
+
+    <script type="text/javascript" src="js/小区信息.js"></script>
+
+    <script type="text/javascript" src="js/moment.min.js"></script>
+    <script type="text/javascript" src="js/智慧停车.js"></script>
+
+    <script type="text/javascript">
+        // 实时更新时间
+        function updateTime() {
+            var now = new Date();
+            
+            // 格式化日期：YYYY-MM月
+            var yearMonth = now.getFullYear() + '-' + String(now.getMonth() + 1).padStart(2, '0') + '月';
+            
+            // 格式化日期：YYYY-MM-DD
+            var fullDate = now.getFullYear() + '-' + String(now.getMonth() + 1).padStart(2, '0') + '-' + String(now.getDate()).padStart(2, '0');
+            
+            // 格式化时间：HH:MM:SS
+            var time = String(now.getHours()).padStart(2, '0') + ':' + String(now.getMinutes()).padStart(2, '0') + ':' + String(now.getSeconds()).padStart(2, '0');
+            
+            // 更新时间段显示
+            document.querySelectorAll('.current-time').forEach(function(element) {
+                element.textContent = yearMonth;
+            });
+            
+            // 更新日期显示
+            document.querySelectorAll('.current-date').forEach(function(element) {
+                element.textContent = fullDate;
+            });
+            
+            // 更新预约时间显示（保持原有时分不变，只更新日期）
+            document.querySelectorAll('.zhtc_table_li_content div:nth-child(2)').forEach(function(element) {
+                var timePart = element.innerHTML.split('<br/>')[1].trim();
+                element.innerHTML = fullDate + '<br/> ' + timePart;
+            });
+        }
+        
+        // 初始更新
+        updateTime();
+        
+        // 每秒钟更新一次
+        setInterval(updateTime, 1000);
+    </script>
+
+</body>
+
+</html>
