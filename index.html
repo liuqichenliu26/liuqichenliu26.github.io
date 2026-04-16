@@ -339,7 +339,7 @@
                 animationDuration: 1500, animationEasingUpdate: 'cubicOut'
             }]
         };
-        fetch('https://geo.datav.aliyun.com/areas_v3/bound/100000_full.json')
+        fetch('./china_map.json')
             .then(response => response.json())
             .then(geoJson => {
                 echarts.registerMap('china', geoJson);
