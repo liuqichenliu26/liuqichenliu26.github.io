@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>中国古代建筑文化</title>
+    <!-- 引入稳定版ECharts CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        html, body {
+            width: 100%;
+            height: 100%;
+            background-color: #0f172a;
+            overflow: hidden;
+            font-family: "Microsoft Yahei", sans-serif;
+            position: relative;
+        }
+        .container {
+            display: grid;
+            grid-template-columns: 70% 30%;
+            grid-template-rows: 33.3% 33.3% 33.3%;
+            width: 100%;
+            height: 100vh;
+            gap: 12px;
+            padding: 12px;
+        }
+        #map-container {
+            grid-row: 1 / 4;
+            grid-column: 1 / 2;
+            border-radius: 8px;
+            background-color: rgba(15, 23, 42, 0.9);
+            border: 1px solid #475569;
+        }
+        .info-panel {
+            background-color: rgba(15, 23, 42, 0.95);
+            border: 1px solid #475569;
+            border-radius: 8px;
+            padding: 15px 18px;
+            color: #e2e8f0;
+            overflow-y: auto;
+        }
+        .info-panel::-webkit-scrollbar {
+            width: 4px;
+        }
+        .info-panel::-webkit-scrollbar-track {
+            background: rgba(30, 41, 59, 0.5);
+            border-radius: 2px;
+        }
+        .info-panel::-webkit-scrollbar-thumb {
+            background: #475569;
+            border-radius: 2px;
+        }
+        .panel-title {
+            font-size: 17px;
+            color: #3b82f6;
+            margin-bottom: 10px;
+            text-align: center;
+            font-weight: bold;
+            letter-spacing: 2px;
+            padding-bottom: 6px;
+            border-bottom: 1px solid rgba(71, 85, 105, 0.5);
+        }
+        .content-list {
+            list-style: none;
+            line-height: 1.6;
+            font-size: 13px;
+        }
+        .content-list li {
+            margin: 6px 0;
+            padding-left: 10px;
+            position: relative;
+        }
+        .content-list li::before {
+            content: "●";
+            color: #3b82f6;
+            position: absolute;
+            left: 0;
+            font-size: 9px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+        .content-list .tag {
+            color: #3b82f6;
+            font-weight: bold;
+        }
+        /* 主标题 */
+        .map-title {
+            position: absolute;
+            top: 25px;
+            left: 35%;
+            transform: translateX(-50%);
+            color: #f8fafc;
+            font-size: 36px;
+            font-weight: bold;
+            z-index: 99999;
+            text-shadow: 0 0 10px rgba(59, 130, 246, 0.8);
+            letter-spacing: 4px;
+        }
+        .map-legend {
+            position: absolute;
+            bottom: 25px;
+            left: 25px;
+            background-color: rgba(15, 23, 42, 0.95);
+            border: 1px solid #475569;
+            border-radius: 8px;
+            padding: 12px 18px;
+            z-index: 99999;
+        }
+        .legend-title {
+            font-size: 16px;
+            color: #3b82f6;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 10px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid rgba(71, 85, 105, 0.5);
+            letter-spacing: 2px;
+        }
+        .legend-item {
+            display: flex;
+            align-items: center;
+            margin: 6px 0;
+            color: #e2e8f0;
+            font-size: 14px;
+        }
+        .legend-color {
+            width: 18px;
+            height: 10px;
+            border-radius: 3px;
+            margin-right: 8px;
+        }
+    </style>
+</head>
+<body>
+    <!-- 顶部主标题 -->
+    <div class="map-title">中国地域建筑特色全量分布</div>
+    
+    <!-- 左下角地域索引图例 -->
+    <div class="map-legend">
+        <div class="legend-title">古建地域风貌索引</div>
+        <div class="legend-item">
+            <div class="legend-color" style="background-color: #3b82f6;"></div>
+            <span>北方</span>
+        </div>
+        <div class="legend-item">
+            <div class="legend-color" style="background-color: #22c55e;"></div>
+            <span>江南</span>
+        </div>
+        <div class="legend-item">
+            <div class="legend-color" style="background-color: #f97316;"></div>
+            <span>岭南</span>
+        </div>
+        <div class="legend-item">
+            <div class="legend-color" style="background-color: #a855f7;"></div>
+            <span>西南</span>
+        </div>
+        <div class="legend-item">
+            <div class="legend-color" style="background-color: #ef4444;"></div>
+            <span>西北</span>
+        </div>
+        <div class="legend-item">
+            <div class="legend-color" style="background-color: #0ea5e9;"></div>
+            <span>东北</span>
+        </div>
+        <div class="legend-item">
+            <div class="legend-color" style="background-color: #84cc16;"></div>
+            <span>华中</span>
+        </div>
+    </div>
+
+    <!-- 主布局容器 -->
+    <div class="container">
+        <!-- 地图区域 -->
+        <div id="map-container"></div>
+
+        <!-- 上方面板：建筑与风俗核心关联 -->
+        <div class="info-panel">
+            <div class="panel-title">建筑与风俗核心关联</div>
+            <ul class="content-list">
+                <li><span class="tag">居住风俗→布局</span>：家族聚居建合院；客家防御建土楼；游牧迁徙建蒙古包</li>
+                <li><span class="tag">礼仪风俗→规制</span>：长幼尊卑定中轴对称；祖先崇拜设祠堂祖屋</li>
+                <li><span class="tag">信仰风俗→装饰</span>：吉祥寓意雕瑞兽纹样；风水观念定朝向布局</li>
+                <li><span class="tag">生活习俗→功能</span>：南方防潮建吊脚楼；北方防寒建厚墙火炕；水乡临水建码头</li>
+            </ul>
+        </div>
+
+        <!-- 中方面板：古建核心哲学思想 -->
+        <div class="info-panel">
+            <div class="panel-title">古建核心哲学思想</div>
+            <ul class="content-list">
+                <li><span class="tag">天人合一</span>：建筑顺应自然，与山水环境共生，因地制宜营造</li>
+                <li><span class="tag">礼制秩序</span>：建筑形制定尊卑等级，中轴对称、主次分明，体现儒家伦理</li>
+                <li><span class="tag">风水观念</span>：选址布局趋吉避凶，兼顾采光通风、山水格局，藏风聚气</li>
+            </ul>
+        </div>
+
+        <!-- 下方面板：各地域典型古建 -->
+        <div class="info-panel">
+            <div class="panel-title">各地域典型古建</div>
+            <ul class="content-list">
+                <li><span class="tag">北方</span>：北京故宫、北京四合院、山西平遥古城</li>
+                <li><span class="tag">江南</span>：苏州拙政园、安徽宏村徽派民居</li>
+                <li><span class="tag">岭南</span>：广州陈家祠、福建土楼、开平碉楼</li>
+                <li><span class="tag">西南</span>：西藏布达拉宫、贵州苗寨吊脚楼、云南傣家竹楼</li>
+                <li><span class="tag">西北</span>：陕北窑洞、敦煌莫高窟、新疆交河故城</li>
+                <li><span class="tag">东北</span>：沈阳故宫、辽宁奉国寺、满族大院</li>
+                <li><span class="tag">华中</span>：湖北黄鹤楼、湖南岳阳楼、岳麓书院</li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+          const mapChart = echarts.init(document.getElementById('map-container'));
+
+         const areaConfig = {
+            北方: {
+                color: '#3b82f6',
+                feature: '厚重庄严合院式',
+                cause: '冬季寒冷、中原农耕定居、儒家礼制',
+                building: '北京故宫、四合院',
+                provinces: ['北京市', '天津市', '河北省', '山西省', '山东省', '河南省']
+            },
+            江南: {
+                color: '#22c55e',
+                feature: '白墙黑瓦园林式',
+                cause: '多雨湿热、水乡地形、文人隐逸文化',
+                building: '苏州拙政园、徽派民居',
+                provinces: ['上海市', '江苏省', '浙江省', '安徽省', '江西省']
+            },
+            岭南: {
+                color: '#f97316',
+                feature: '通透轻巧骑楼式',
+                cause: '高温多雨、沿海商贸、中西文化融合',
+                building: '广州陈家祠、福建土楼',
+                provinces: ['广东省', '广西壮族自治区', '福建省', '海南省', '香港特别行政区', '澳门特别行政区', '台湾省', '南海诸岛']
+            },
+            西南: {
+                color: '#a855f7',
+                feature: '架空干栏式',
+                cause: '山地崎岖、湿热多虫、多民族聚居',
+                building: '苗寨吊脚楼、傣家竹楼',
+                provinces: ['四川省', '重庆市', '贵州省', '云南省', '西藏自治区']
+            },
+            西北: {
+                color: '#ef4444',
+                feature: '生土窑洞式',
+                cause: '黄土深厚、风沙大、昼夜温差大',
+                building: '陕北窑洞、敦煌莫高窟',
+                provinces: ['陕西省', '甘肃省', '青海省', '宁夏回族自治区', '新疆维吾尔自治区', '内蒙古自治区']
+            },
+            东北: {
+                color: '#0ea5e9',
+                feature: '防寒囤顶式',
+                cause: '冬季漫长严寒、渔猎农耕定居',
+                building: '沈阳故宫、满族大院',
+                provinces: ['辽宁省', '吉林省', '黑龙江省']
+            },
+            华中: {
+                color: '#84cc16',
+                feature: '天井院落式',
+                cause: '梅雨闷热、丘陵地形、楚文化影响',
+                building: '岳阳楼、岳麓书院',
+                provinces: ['湖北省', '湖南省']
+            }
+        };
+        const convertMapData = () => {
+            const mapData = [];
+            const allProvinces = [
+                '北京市','天津市','河北省','山西省','内蒙古自治区','辽宁省','吉林省','黑龙江省',
+                '上海市','江苏省','浙江省','安徽省','福建省','江西省','山东省','河南省',
+                '湖北省','湖南省','广东省','广西壮族自治区','海南省','重庆市','四川省',
+                '贵州省','云南省','西藏自治区','陕西省','甘肃省','青海省','宁夏回族自治区',
+                '新疆维吾尔自治区','香港特别行政区','澳门特别行政区','台湾省','南海诸岛'
+            ];
+                allProvinces.forEach(province => {
+                mapData.push({
+                    name: province,
+                    area: '未分类',
+                    value: 1,
+                    feature: '暂无特色描述',
+                    cause: '暂无相关说明',
+                    building: '暂无典型建筑',
+                    itemStyle: { areaColor: '#1e293b' }
+                });
+            });
+               for (const [areaName, areaInfo] of Object.entries(areaConfig)) {
+                areaInfo.provinces.forEach(province => {
+                    const index = mapData.findIndex(item => item.name === province);
+                    if (index !== -1) {
+                        mapData[index] = {
+                            name: province,
+                            area: areaName,
+                            value: 1,
+                            feature: areaInfo.feature,
+                            cause: areaInfo.cause,
+                            building: areaInfo.building,
+                            itemStyle: { areaColor: areaInfo.color }
+                        };
+                    }
+                });
+            }
+            return mapData;
+        };
+        const mapData = convertMapData();
+        const mapOption = {
+            backgroundColor: 'transparent',
+            tooltip: {
+                trigger: 'item',
+                backgroundColor: 'rgba(15, 23, 42, 0.95)',
+                borderColor: '#3b82f6',
+                borderWidth: 1,
+                textStyle: { color: '#e2e8f0', fontSize: 14, lineHeight: 1.6 },
+                formatter: (params) => {
+                    if (!params.data) return params.name;
+                    return `
+                        <div style="font-weight: bold; color: #3b82f6;">建筑风格：${params.data.feature}</div>
+                        <div>成因：${params.data.cause}</div>
+                        <div>典型建筑：${params.data.building}</div>
+                    `;
+                }
+            },
+            series: [{
+                name: '地域建筑特色', type: 'map', map: 'china', data: mapData,
+                roam: true, scaleLimit: { min: 0.8, max: 3 },
+                zoom: 1.2, center: [104.195397, 35.86166],
+                itemStyle: { borderColor: '#475569', borderWidth: 1, areaColor: '#1e293b' },
+                emphasis: {
+                    itemStyle: {
+                        borderColor: '#e2e8f0', borderWidth: 3,
+                        shadowBlur: 30, shadowColor: 'rgba(226, 232, 240, 0.6)'
+                    },
+                    label: { show: true, color: '#e2e8f0', fontSize: 14, fontWeight: 'bold' }
+                },
+                animationDuration: 1500, animationEasingUpdate: 'cubicOut'
+            }]
+        };
+        fetch('https://geo.datav.aliyun.com/areas_v3/bound/100000_full.json')
+            .then(response => response.json())
+            .then(geoJson => {
+                echarts.registerMap('china', geoJson);
+                mapChart.setOption(mapOption);
+            })
+            .catch(err => {
+                console.error('地图加载失败：', err);
+                alert('地图数据加载失败，请检查网络连接后刷新页面');
+            });
+        window.addEventListener('resize', () => {
+            mapChart.resize();
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,889 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>脊兽图解</title>
+    <style>
+      :root {
+        --paper: #f6f0e6;
+        --paper-strong: #fffaf2;
+        --ink: #26221f;
+        --muted: #675f58;
+        --soft: #ded2c2;
+        --accent: #9a3333;
+        --jade: #235d59;
+        --gold: #9e762c;
+        --white: #ffffff;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html,
+      body {
+        width: 100%;
+        min-height: 100%;
+      }
+
+      body {
+        margin: 0;
+        color: var(--ink);
+        font-family: "Microsoft YaHei", "PingFang SC", "Noto Sans SC", Arial, sans-serif;
+        background:
+          linear-gradient(90deg, rgba(38, 34, 31, 0.025) 1px, transparent 1px),
+          linear-gradient(0deg, rgba(38, 34, 31, 0.02) 1px, transparent 1px),
+          var(--paper);
+        background-size: 28px 28px;
+      }
+
+      button {
+        font: inherit;
+      }
+
+      .page {
+        min-height: 100vh;
+        display: grid;
+        grid-template-columns: 168px minmax(0, 1fr);
+      }
+
+      .sidebar {
+        min-height: 100vh;
+        padding: 56px 36px 40px;
+        border-right: 1px solid var(--soft);
+        background: rgba(255, 250, 242, 0.64);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .sidebar-title,
+      .sidebar-subtitle {
+        writing-mode: vertical-rl;
+      }
+
+      .sidebar-title {
+        margin: 0;
+        font-family: "SimSun", "Songti SC", serif;
+        font-size: 48px;
+        font-weight: 700;
+      }
+
+      .sidebar-mark {
+        width: 2px;
+        height: 96px;
+        margin: 36px 0;
+        background: var(--accent);
+      }
+
+      .sidebar-subtitle {
+        color: var(--muted);
+        font-size: 17px;
+      }
+
+      .main {
+        height: 100vh;
+        min-width: 0;
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+      }
+
+      .mobile-head {
+        display: none;
+      }
+
+      .intro {
+        padding: 34px 56px 14px;
+      }
+
+      .intro-inner {
+        max-width: 1080px;
+        display: grid;
+        grid-template-columns: 42px minmax(0, 1fr);
+        gap: 16px;
+      }
+
+      .info-icon {
+        width: 42px;
+        height: 42px;
+        border-radius: 8px;
+        display: grid;
+        place-items: center;
+        color: var(--paper-strong);
+        background: var(--jade);
+        font-weight: 700;
+      }
+
+      h2 {
+        margin: 0 0 10px;
+        font-family: "SimSun", "Songti SC", serif;
+        font-size: 25px;
+      }
+
+      p {
+        margin: 0;
+        color: var(--muted);
+        line-height: 1.8;
+        font-size: 15px;
+      }
+
+      .intro p + p {
+        margin-top: 8px;
+      }
+
+      .roof {
+        padding: 10px 56px 12px;
+      }
+
+      .roof-panel {
+        position: relative;
+        height: 108px;
+        padding: 16px 26px;
+        border: 1px solid var(--soft);
+        border-radius: 8px;
+        background: rgba(255, 250, 242, 0.74);
+        overflow: hidden;
+      }
+
+      .roof-line {
+        position: absolute;
+        left: 36px;
+        right: 36px;
+        top: 36px;
+        height: 2px;
+        background: var(--soft);
+      }
+
+      .roof-dots {
+        position: relative;
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        z-index: 1;
+      }
+
+      .roof-dot {
+        width: 56px;
+        border: 0;
+        padding: 0;
+        background: transparent;
+        color: var(--muted);
+        cursor: pointer;
+      }
+
+      .roof-dot i {
+        width: 16px;
+        height: 16px;
+        margin: 12px auto 8px;
+        display: block;
+        border: 2px solid var(--accent);
+        border-radius: 999px;
+        background: var(--paper-strong);
+        transition: transform 0.2s ease, background 0.2s ease;
+      }
+
+      .roof-dot span {
+        height: 56px;
+        display: inline-block;
+        writing-mode: vertical-rl;
+        font-family: "SimSun", "Songti SC", serif;
+        font-size: 13px;
+      }
+
+      .roof-dot:hover,
+      .roof-dot.is-active {
+        color: var(--accent);
+      }
+
+      .roof-dot:hover i,
+      .roof-dot.is-active i {
+        background: var(--accent);
+        transform: scale(1.18);
+      }
+
+      .gallery {
+        position: relative;
+        flex: 1;
+        min-height: 0;
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+        padding-bottom: 24px;
+      }
+
+      .controls {
+        position: absolute;
+        right: 56px;
+        top: 10px;
+        z-index: 2;
+        display: flex;
+        gap: 8px;
+      }
+
+      .arrow {
+        width: 46px;
+        height: 46px;
+        border: 1px solid var(--soft);
+        border-radius: 8px;
+        color: var(--ink);
+        background: rgba(255, 250, 242, 0.95);
+        cursor: pointer;
+        box-shadow: 0 6px 16px rgba(38, 34, 31, 0.08);
+        transition: color 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+      }
+
+      .arrow:hover {
+        color: var(--accent);
+        border-color: var(--accent);
+        transform: translateY(-1px);
+      }
+
+      .track {
+        min-height: 0;
+        flex: 1;
+        display: flex;
+        align-items: stretch;
+        gap: 24px;
+        overflow-x: auto;
+        overflow-y: hidden;
+        scroll-snap-type: x mandatory;
+        scroll-behavior: smooth;
+        padding: 64px 96px 18px 56px;
+        scrollbar-width: none;
+      }
+
+      .track::-webkit-scrollbar {
+        display: none;
+      }
+
+      .beast-card {
+        flex: 0 0 462px;
+        max-width: 86vw;
+        min-height: 0;
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+        scroll-snap-align: start;
+        border: 1px solid var(--soft);
+        border-radius: 8px;
+        background: var(--white);
+        box-shadow: 0 12px 28px rgba(38, 34, 31, 0.08);
+      }
+
+      .media {
+        position: relative;
+        min-height: 254px;
+        height: 39%;
+        display: grid;
+        place-items: center;
+        overflow: hidden;
+        background:
+          repeating-linear-gradient(135deg, rgba(35, 93, 89, 0.06) 0 1px, transparent 1px 15px),
+          #f1eadf;
+      }
+
+      .watermark {
+        position: absolute;
+        color: rgba(158, 118, 44, 0.13);
+        font-family: "SimSun", "Songti SC", serif;
+        font-size: 136px;
+        font-weight: 700;
+        user-select: none;
+      }
+
+      .media img {
+        position: relative;
+        z-index: 1;
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        padding: 24px;
+        filter: drop-shadow(0 12px 12px rgba(38, 34, 31, 0.16));
+      }
+
+      .media img.is-hidden {
+        display: none;
+      }
+
+      .missing {
+        position: relative;
+        z-index: 2;
+        padding: 10px 14px;
+        color: var(--muted);
+        border: 1px solid var(--soft);
+        border-radius: 8px;
+        background: rgba(255, 250, 242, 0.86);
+      }
+
+      .badge {
+        position: absolute;
+        top: 14px;
+        left: 14px;
+        z-index: 2;
+        width: 34px;
+        height: 34px;
+        display: grid;
+        place-items: center;
+        border-radius: 8px;
+        color: var(--paper-strong);
+        background: var(--accent);
+        font-family: Georgia, serif;
+        font-size: 15px;
+      }
+
+      .content {
+        min-height: 0;
+        flex: 1;
+        padding: 24px;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .title-row {
+        display: flex;
+        justify-content: space-between;
+        gap: 14px;
+        align-items: flex-start;
+        margin-bottom: 14px;
+      }
+
+      h3 {
+        margin: 0 0 4px;
+        font-family: "SimSun", "Songti SC", serif;
+        font-size: 30px;
+      }
+
+      .pinyin {
+        color: var(--muted);
+        font-family: Consolas, "Courier New", monospace;
+        font-size: 13px;
+      }
+
+      .role {
+        flex: 0 0 auto;
+        max-width: 44%;
+        padding: 6px 9px;
+        border: 1px solid rgba(154, 51, 51, 0.28);
+        border-radius: 6px;
+        color: var(--accent);
+        background: rgba(154, 51, 51, 0.07);
+        font-size: 13px;
+        text-align: center;
+      }
+
+      .rule {
+        width: 48px;
+        height: 2px;
+        margin-bottom: 12px;
+        background: var(--soft);
+      }
+
+      .desc {
+        min-height: 0;
+        margin: 0 0 18px;
+        padding: 0;
+        list-style: none;
+        overflow-y: auto;
+        color: var(--muted);
+        line-height: 1.72;
+        font-size: 15px;
+      }
+
+      .desc li {
+        position: relative;
+        padding-left: 15px;
+        margin: 0 0 8px;
+      }
+
+      .desc li::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 0.72em;
+        width: 5px;
+        height: 5px;
+        border-radius: 999px;
+        background: var(--gold);
+      }
+
+      .features {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-top: auto;
+      }
+
+      .feature {
+        padding: 6px 10px;
+        border: 1px solid var(--soft);
+        border-radius: 6px;
+        color: var(--muted);
+        background: rgba(246, 240, 230, 0.76);
+        font-size: 12px;
+      }
+
+      .progress {
+        padding: 0 56px;
+      }
+
+      .progress-line {
+        height: 6px;
+        overflow: hidden;
+        border-radius: 999px;
+        background: rgba(103, 95, 88, 0.18);
+      }
+
+      .progress-fill {
+        width: 6%;
+        height: 100%;
+        background: var(--jade);
+        transition: width 0.18s ease;
+      }
+
+      @media (max-width: 960px) {
+        .page {
+          display: block;
+        }
+
+        .sidebar {
+          display: none;
+        }
+
+        .main {
+          min-height: 100vh;
+          height: auto;
+        }
+
+        .mobile-head {
+          display: block;
+          padding: 22px 22px 18px;
+          border-bottom: 1px solid var(--soft);
+          background: rgba(255, 250, 242, 0.78);
+        }
+
+        .mobile-head p {
+          color: var(--accent);
+          font-size: 13px;
+          margin-bottom: 6px;
+        }
+
+        .mobile-head h1 {
+          margin: 0;
+          font-family: "SimSun", "Songti SC", serif;
+          font-size: 34px;
+        }
+
+        .intro {
+          padding: 24px 22px 8px;
+        }
+
+        .intro-inner {
+          grid-template-columns: 34px minmax(0, 1fr);
+          gap: 12px;
+        }
+
+        .info-icon {
+          width: 34px;
+          height: 34px;
+        }
+
+        h2 {
+          font-size: 22px;
+        }
+
+        .roof {
+          display: none;
+        }
+
+        .gallery {
+          height: 660px;
+          padding-bottom: 18px;
+        }
+
+        .controls {
+          right: 22px;
+          top: 10px;
+        }
+
+        .track {
+          gap: 18px;
+          padding: 62px 44px 16px 22px;
+        }
+
+        .beast-card {
+          flex-basis: 84vw;
+          max-width: 84vw;
+        }
+
+        .media {
+          min-height: 222px;
+        }
+
+        .content {
+          padding: 20px;
+        }
+
+        h3 {
+          font-size: 27px;
+        }
+
+        .role {
+          max-width: 48%;
+        }
+
+        .progress {
+          padding: 0 22px;
+        }
+      }
+
+      @media (max-width: 520px) {
+        .intro-inner {
+          display: block;
+        }
+
+        .info-icon {
+          margin-bottom: 12px;
+        }
+
+        .intro p {
+          font-size: 14px;
+        }
+
+        .gallery {
+          height: 700px;
+        }
+
+        .arrow {
+          width: 42px;
+          height: 42px;
+        }
+
+        .title-row {
+          display: block;
+        }
+
+        .role {
+          display: inline-block;
+          max-width: 100%;
+          margin-top: 10px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="page">
+      <aside class="sidebar" aria-label="页面标题">
+        <h1 class="sidebar-title">脊兽图解</h1>
+        <div class="sidebar-mark"></div>
+        <div class="sidebar-subtitle">中国古代单体建筑</div>
+      </aside>
+
+      <main class="main">
+        <header class="mobile-head">
+          <p>中国古代单体建筑</p>
+          <h1>脊兽图解</h1>
+        </header>
+
+        <section class="intro">
+          <div class="intro-inner">
+            <div class="info-icon" aria-hidden="true">i</div>
+            <div>
+              <h2>屋脊上的守护者</h2>
+              <p>脊兽，是中国古代建筑屋顶的脊上所安放的兽件。它们兼具装饰建筑、覆盖瓦钉、防止雨水渗漏的实用功能，也承载着等级秩序、辟邪纳福与祈愿平安的象征意义。</p>
+              <p>这组图解按照屋脊上的常见排列顺序呈现，从骑凤仙人开始，依次认识龙、凤、狮子、天马、海马、狻猊、狎鱼、獬豸、斗牛、行什以及垂兽、套兽等构件。</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="roof" aria-label="脊兽顺序导航">
+          <div class="roof-panel">
+            <div class="roof-line"></div>
+            <div class="roof-dots" id="roofDots"></div>
+          </div>
+        </section>
+
+        <section class="gallery" aria-label="脊兽图解卡片">
+          <div class="controls" aria-label="滚动控制">
+            <button class="arrow" id="prevBtn" type="button" aria-label="向左浏览">‹</button>
+            <button class="arrow" id="nextBtn" type="button" aria-label="向右浏览">›</button>
+          </div>
+
+          <div class="track" id="beastTrack" tabindex="0"></div>
+
+          <div class="progress" aria-hidden="true">
+            <div class="progress-line">
+              <div class="progress-fill" id="progressFill"></div>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <script>
+      const beasts = [
+        {
+          name: "骑凤仙人",
+          pinyin: "qi feng xian ren",
+          role: "固定瓦件",
+          image: "./pic/骑凤仙人.png",
+          desc: [
+            "又称仙人骑凤，是垂脊前端的标志性构件。",
+            "主要作用是固定垂脊下端第一块瓦件。",
+            "遮盖瓦钉，减少雨水侵蚀，也让屋脊的开端更具仪式感。"
+          ],
+          features: ["固定垂脊", "遮盖瓦钉"]
+        },
+        {
+          name: "龙",
+          pinyin: "long",
+          role: "皇权与尊贵",
+          image: "./pic/龙.png",
+          desc: [
+            "龙代表至高无上的尊贵，是宫殿屋脊中最重要的祥瑞形象之一。",
+            "传说龙能兴云布雨，也常被赋予镇火、护佑建筑的含义。",
+            "明清时期，龙的形象与帝王权威联系尤其紧密。"
+          ],
+          features: ["至高无上", "兴云镇火"]
+        },
+        {
+          name: "凤",
+          pinyin: "feng",
+          role: "吉祥与富贵",
+          image: "./pic/凤.png",
+          desc: [
+            "凤是传说中的百鸟之王，常与龙相配，象征吉祥、仁德与尊贵。",
+            "古代建筑中使用凤的形象，表达祥瑞降临、礼制庄严的意味。",
+            "它轻盈舒展的姿态，也为庄重的屋脊增添灵动之气。"
+          ],
+          features: ["百鸟之王", "祥瑞仁德"]
+        },
+        {
+          name: "狮子",
+          pinyin: "shi zi",
+          role: "辟邪与护法",
+          image: "./pic/狮子.png",
+          desc: [
+            "狮子威猛勇健，在传统建筑中常有守护、辟邪的寓意。",
+            "它被视为镇守山门与宫殿的瑞兽，象征威严与力量。",
+            "置于屋脊之上，也寄托护佑建筑、驱除不祥的愿望。"
+          ],
+          features: ["威严勇猛", "守护辟邪"]
+        },
+        {
+          name: "天马",
+          pinyin: "tian ma",
+          role: "祥瑞与智慧",
+          image: "./pic/天马.png",
+          desc: [
+            "天马寓意驰骋高远、独往独来，带有超越凡俗的想象。",
+            "它被用于殿脊之上，象征开拓、昂扬与气势。",
+            "天马的形象让屋顶序列在庄严之中多了一份跃动。"
+          ],
+          features: ["昂扬高远", "开拓气势"]
+        },
+        {
+          name: "海马",
+          pinyin: "hai ma",
+          role: "尊贵与威仪",
+          image: "./pic/海马.png",
+          desc: [
+            "海马又称落龙子，兼具海中灵兽与祥瑞坐骑的想象。",
+            "它象征忠勇、通达与吉祥，寓意上通天象、下入沧海。",
+            "放置在屋脊上，扩展了建筑瑞兽体系的神话空间。"
+          ],
+          features: ["忠勇吉祥", "通天入海"]
+        },
+        {
+          name: "狻猊",
+          pinyin: "suan ni",
+          role: "祥瑞与护佑",
+          image: "./pic/狻猊.png",
+          desc: [
+            "狻猊是中国古代神话传说中的龙生九子之一，形似狮。",
+            "传说它喜烟好坐，因此也常见于香炉等器物装饰。",
+            "用于屋脊时，常被理解为威武、护佑与安宁的象征。"
+          ],
+          features: ["龙生九子", "护佑平安"]
+        },
+        {
+          name: "狎鱼",
+          pinyin: "xia yu",
+          role: "降雨与灭火",
+          image: "./pic/狎鱼.png",
+          desc: [
+            "狎鱼是海中异兽，传说能够兴云作雨。",
+            "古建筑多为木构，屋脊上设置狎鱼，也寓意防火避灾。",
+            "它与狻猊的位置在不同建筑中有时会出现调整。"
+          ],
+          features: ["兴云作雨", "灭火防灾"]
+        },
+        {
+          name: "獬豸",
+          pinyin: "xie zhi",
+          role: "公正与明辨",
+          image: "./pic/獬豸.png",
+          desc: [
+            "獬豸俗称独角兽，传说能辨别是非曲直。",
+            "古代常以獬豸象征公正、勇猛与执法无私。",
+            "它出现在屋脊队列中，强化了建筑庄严端正的气质。"
+          ],
+          features: ["明辨是非", "勇猛公正"]
+        },
+        {
+          name: "斗牛",
+          pinyin: "dou niu",
+          role: "降雨与避灾",
+          image: "./pic/斗牛.png",
+          desc: [
+            "斗牛在神话传说中是一种虬螭类瑞兽。",
+            "它常被赋予除祟、灭火、降雨的含义。",
+            "置于殿脊之上，寄托对建筑安全与风调雨顺的祈愿。"
+          ],
+          features: ["除祟灭火", "吉祥雨镇"]
+        },
+        {
+          name: "行什",
+          pinyin: "hang shi",
+          role: "太和殿特例",
+          image: "./pic/行什.png",
+          desc: [
+            "行什背生双翼，手持金刚宝杵，常被认为具有降魔护法的象征。",
+            "它位居队列末尾，因排行第十而得名。",
+            "在故宫太和殿上出现，显示其极高的建筑等级。"
+          ],
+          features: ["降魔护法", "等级象征"]
+        },
+        {
+          name: "垂兽",
+          pinyin: "chui shou",
+          role: "防止下滑",
+          image: "./pic/垂兽.png",
+          desc: [
+            "垂兽又称角兽，是安置在垂脊上的兽形构件。",
+            "它位于蹲兽之后，用来加强屋脊交接部位。",
+            "垂兽兼具固定瓦件、防止下滑和装饰屋面的作用。"
+          ],
+          features: ["防止下滑", "加固结合部"]
+        },
+        {
+          name: "套兽",
+          pinyin: "tao shou",
+          role: "防水与装饰",
+          image: "./pic/套兽.png",
+          desc: [
+            "套兽是古建筑屋顶上的防水构件。",
+            "它常安装在翼角、戗角或梁枋端部，中部套空。",
+            "外形多塑作异兽纹样，兼有防水和装饰作用。"
+          ],
+          features: ["防水构件", "异兽纹样"]
+        }
+      ];
+
+      const track = document.getElementById("beastTrack");
+      const roofDots = document.getElementById("roofDots");
+      const progressFill = document.getElementById("progressFill");
+      const prevBtn = document.getElementById("prevBtn");
+      const nextBtn = document.getElementById("nextBtn");
+
+      function renderCards() {
+        track.innerHTML = beasts.map((beast, index) => `
+          <article class="beast-card" aria-label="${index + 1}. ${beast.name}">
+            <div class="media">
+              <span class="watermark">${beast.name.slice(0, 1)}</span>
+              <img src="${beast.image}" alt="${beast.name}" loading="lazy" />
+              <div class="missing" hidden>缺少图片：${beast.image}</div>
+              <div class="badge">${index + 1}</div>
+            </div>
+            <div class="content">
+              <div class="title-row">
+                <div>
+                  <h3>${beast.name}</h3>
+                  <div class="pinyin">[${beast.pinyin}]</div>
+                </div>
+                <div class="role">${beast.role}</div>
+              </div>
+              <div class="rule"></div>
+              <ul class="desc">
+                ${beast.desc.map((line) => `<li>${line}</li>`).join("")}
+              </ul>
+              <div class="features">
+                ${beast.features.map((feature) => `<span class="feature">${feature}</span>`).join("")}
+              </div>
+            </div>
+          </article>
+        `).join("");
+
+        track.querySelectorAll("img").forEach((image) => {
+          image.addEventListener("error", () => {
+            image.classList.add("is-hidden");
+            const missing = image.nextElementSibling;
+            if (missing) {
+              missing.hidden = false;
+            }
+          });
+        });
+      }
+
+      function renderDots() {
+        roofDots.innerHTML = beasts.map((beast, index) => `
+          <button class="roof-dot" type="button" aria-label="查看${beast.name}" data-index="${index}">
+            <i aria-hidden="true"></i>
+            <span>${beast.name}</span>
+          </button>
+        `).join("");
+
+        roofDots.querySelectorAll("button").forEach((button) => {
+          button.addEventListener("click", () => scrollToIndex(Number(button.dataset.index)));
+        });
+      }
+
+      function cardStep() {
+        const card = track.querySelector(".beast-card");
+        const styles = window.getComputedStyle(track);
+        const gap = Number.parseFloat(styles.columnGap || styles.gap || "24");
+        return card ? card.getBoundingClientRect().width + gap : 480;
+      }
+
+      function scrollToIndex(index) {
+        track.scrollTo({
+          left: index * cardStep(),
+          behavior: "smooth"
+        });
+      }
+
+      function scrollByDirection(direction) {
+        track.scrollBy({
+          left: direction * cardStep(),
+          behavior: "smooth"
+        });
+      }
+
+      function updateProgress() {
+        const max = Math.max(1, track.scrollWidth - track.clientWidth);
+        const progress = track.scrollLeft / max;
+        progressFill.style.width = `${Math.max(6, progress * 100)}%`;
+
+        const activeIndex = Math.max(0, Math.min(beasts.length - 1, Math.round(track.scrollLeft / cardStep())));
+        roofDots.querySelectorAll(".roof-dot").forEach((dot, index) => {
+          dot.classList.toggle("is-active", index === activeIndex);
+          if (index === activeIndex) {
+            dot.setAttribute("aria-current", "true");
+          } else {
+            dot.removeAttribute("aria-current");
+          }
+        });
+      }
+
+      renderCards();
+      renderDots();
+      updateProgress();
+
+      prevBtn.addEventListener("click", () => scrollByDirection(-1));
+      nextBtn.addEventListener("click", () => scrollByDirection(1));
+      track.addEventListener("scroll", () => window.requestAnimationFrame(updateProgress), { passive: true });
+      window.addEventListener("resize", updateProgress);
+    </script>
+  </body>
+</html>

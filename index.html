@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>古脊新生</title>
+  <!-- 引入 Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    
+    body {
+      background-color: #fffef8;
+      color: #4a4a4a;
+      margin: 0;
+      padding: 0;
+    }
+
+    .bg-sakura-pink {
+      background-color: #ffecf1;
+    }
+
+    .text-sakura {
+      color: #ff9aa2;
+    }
+
+    .gradient-sakura {
+      background: linear-gradient(135deg, #ffecf1 0%, #ffffff 100%);
+    }
+
+    /* 楷体风格字体 */
+    .calligraphy-font {
+      font-family: 'STKaiti', 'KaiTi', 'SimSun', serif;
+      text-shadow: 2px 2px 4px rgba(255, 255, 255, 0.8);
+    }
+
+    /* 全局样式 */
+    .sakura-topic {
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+    }
+  </style>
+</head>
+<body>
+  <div class="sakura-topic">
+    <!-- 背景1：专题视觉大图 -->
+    <section class="min-h-screen relative flex items-center justify-center overflow-hidden">
+      <img
+        alt="Sakura Topic"
+        class="absolute inset-0 w-full h-full object-cover"
+        src="./pic/背景1.jpg"
+      />
+      <div class="relative z-10 text-center max-w-3xl px-6 transform -translate-y-10">
+        <h1 class="text-9xl font-bold text-black mb-4 calligraphy-font">古脊新生</h1>
+        <h2 class="text-6xl font-bold text-black mb-8 calligraphy-font whitespace-nowrap">
+          ——基于VR的沉浸式古代建筑可视化
+        </h2>
+      </div>
+    </section>
+
+    <!-- 背景2 -->
+    <section
+      class="min-h-screen py-32 bg-cover bg-center"
+      style="background-image: url('./pic/背景2.jpg')"
+    >
+      <div class="max-w-7xl mx-auto px-6">
+        <h2 class="text-3xl font-bold text-center mb-10">大屏展示</h2>
+        <div class="overflow-x-auto pb-8">
+          <div class="flex space-x-8 min-w-max">
+            <a href="screen01.html" class="group">
+              <div class="rounded-[50px] overflow-hidden w-[30rem] bg-pink-50">
+                <img
+                  alt="背景3"
+                  class="w-full object-cover group-hover:scale-110 transition-transform duration-700"
+                  src="./pic/背景3.png"
+                />
+              </div>
+            </a>
+            <a href="screen02/index.html" class="group">
+              <div class="rounded-[50px] overflow-hidden w-[30rem] bg-pink-50">
+                <img
+                  alt="背景4"
+                  class="w-full object-cover group-hover:scale-110 transition-transform duration-700"
+                  src="./pic/背景4.png"
+                />
+              </div>
+            </a>
+            <a href="screen03/index.html" class="group">
+              <div class="rounded-[50px] overflow-hidden w-[30rem] bg-pink-50">
+                <img
+                  alt="背景5"
+                  class="w-full object-cover group-hover:scale-110 transition-transform duration-700"
+                  src="./pic/背景5.png"
+                />
+              </div>
+            </a>
+            <a href="./screen04/screen04.html" class="group">
+              <div class="rounded-[50px] overflow-hidden w-[30rem] bg-pink-50">
+                <img
+                  alt="背景6"
+                  class="w-full object-cover group-hover:scale-110 transition-transform duration-700"
+                  src="./pic/背景6.png"
+                />
+              </div>
+            </a>
+            <a href="screen05/screen05.html" class="group">
+              <div class="rounded-[50px] overflow-hidden w-[30rem] bg-pink-50">
+                <img
+                  alt="背景7"
+                  class="w-full object-cover group-hover:scale-110 transition-transform duration-700"
+                  src="./pic/背景7.png"
+                />
+              </div>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 底部footer -->
+    <footer class="py-3 bg-white text-center">
+      <div class="max-w-md mx-auto">
+        <h3 class="text-xl font-bold text-gray-800 mb-4 whitespace-nowrap">
+          古脊新生——基于VR的沉浸式古建筑可视化
+        </h3>
+        <p class="text-xs text-gray-600 mb-5">2026 中国计算机设计大赛·数据可视化</p>
+      </div>
+    </footer>
+  </div>
+</body>
+</html>
