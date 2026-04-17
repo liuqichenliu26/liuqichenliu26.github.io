@@ -339,7 +339,7 @@
                 animationDuration: 1500, animationEasingUpdate: 'cubicOut'
             }]
         };
-        fetch('./china_map.json')
+        fetch('china_map.json')
             .then(response => response.json())
             .then(geoJson => {
                 echarts.registerMap('china', geoJson);
