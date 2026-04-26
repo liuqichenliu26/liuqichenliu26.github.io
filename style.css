@@ -1,0 +1,454 @@
+/* ===== 全局 ===== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "Segoe UI", sans-serif;
+    scroll-behavior: smooth;
+    color: #fff;
+    line-height: 1.6;
+}
+
+/* ===== 固定背景 ===== */
+.bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+
+    background: url("./img/hero-cat.webp") center/cover no-repeat;
+
+    z-index: -1;
+}
+
+/* 背景暗化 */
+.bg::after {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+}
+
+/* ===== 导航栏（唯一玻璃） ===== */
+.navbar {
+    position: fixed;
+    top: 20px;
+    right: 40px;
+
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+
+    padding: 10px 20px;
+    border-radius: 15px;
+
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    z-index: 1000;
+}
+
+.navbar a {
+    margin: 0 10px;
+    text-decoration: none;
+    color: #fff;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.navbar a:hover {
+    color: #00c3ff;
+}
+
+/* ===== section（关键：去掉固定高度） ===== */
+section {
+    padding: 60px 10%;
+    max-width: 1000px;
+    /* 控制内容宽度 */
+    margin: 0 auto 40px;
+    /* 居中 + 间距 */
+}
+
+/* 首页稍微突出 */
+#home {
+    padding-top: 120px;
+}
+
+/* ===== 首页 ===== */
+.profile {
+    display: flex;
+    align-items: center;
+    gap: 40px;
+}
+
+.profile img {
+    width: 140px;
+    height: auto;
+    /* 保持比例 */
+    border-radius: 50%;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+.intro p {
+    margin: 10px 0;
+    color: #ddd;
+}
+
+/* 标题 */
+h1 {
+    margin-bottom: 25px;
+    font-size: 30px;
+}
+
+/* ===== 项目 / 科研（列表风） ===== */
+.card-container {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.card {
+    padding: 12px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* ===== 时间轴 ===== */
+.timeline {
+    border-left: 2px solid #00c3ff;
+    padding-left: 15px;
+}
+
+.timeline-item {
+    margin-bottom: 12px;
+    color: #ddd;
+}
+
+/* ===== 链接 ===== */
+a {
+    color: #00c3ff;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* 信息两列布局 */
+.info-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    /* 两列 */
+    gap: 10px 60px;
+    /* 行间距 列间距 */
+}
+
+/* 每一项 */
+.info-grid p {
+    margin: 0;
+    color: #ddd;
+    white-space: nowrap;
+}
+
+/* ===== 社区网格 ===== */
+.community-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 25px;
+    margin-top: 20px;
+}
+
+/* ===== 卡片 ===== */
+.community-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    height: 140px;
+    padding: 20px;
+
+    border-radius: 20px;
+    text-decoration: none;
+    color: #fff;
+
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+
+    border: 1px solid rgba(255, 255, 255, 0.15);
+
+    transition: all 0.35s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+/* 图标 */
+.icon {
+    font-size: 28px;
+    margin-bottom: 8px;
+}
+
+/* 名字 */
+.name {
+    font-size: 18px;
+    font-weight: 600;
+}
+
+/* 提示文字 */
+.hint {
+    margin-top: 8px;
+    font-size: 12px;
+    color: #aaa;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: 0.3s;
+}
+
+/* ===== hover 核心效果 ===== */
+.community-card:hover {
+    transform: translateY(-10px) scale(1.04);
+}
+
+/* hover 出现提示 */
+.community-card:hover .hint {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* ===== 渐变光效（高级感关键） ===== */
+.community-card::before {
+    content: "";
+    position: absolute;
+    width: 150%;
+    height: 150%;
+    top: -50%;
+    left: -50%;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.15), transparent 60%);
+    opacity: 0;
+    transition: 0.4s;
+}
+
+.community-card:hover::before {
+    opacity: 1;
+}
+
+/* ===== 品牌 hover 色 ===== */
+.csdn:hover,
+.github:hover {
+    box-shadow: 0 0 20px rgba(36, 41, 46, 0.6);
+}
+
+
+/* ===== 项目整体容器（磨砂） ===== */
+.project-list {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+
+    padding: 25px 30px;
+    margin-top: 20px;
+
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+}
+/* 单个项目 */
+/* 单个项目（变干净） */
+.project-item {
+    padding: 15px 5px;
+
+    background: transparent;
+    /* ❗去掉小卡片背景 */
+    transition: 0.3s;
+    cursor: pointer;
+
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.project-item:hover {
+    transform: translateX(8px);
+    background: rgba(255, 255, 255, 0.05);
+}
+
+/* 标题 + 技术 */
+.project-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.project-header h3 {
+    margin: 0;
+    font-size: 18px;
+}
+
+/* 技术标签 */
+.tag {
+    font-size: 12px;
+    padding: 4px 10px;
+    border-radius: 10px;
+    background: rgba(0, 195, 255, 0.2);
+    color: #00c3ff;
+}
+
+/* 描述 */
+.desc {
+    margin-top: 10px;
+    color: #ccc;
+    line-height: 1.5;
+}
+
+.project-item:last-child {
+    border-bottom: none;
+}
+
+/* ===== 奖项模块 ===== */
+
+/* ===== 奖项整体容器（磨砂背景） ===== */
+.awards-list {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+
+    padding: 25px 30px;
+    margin-top: 20px;
+
+    background: rgba(255, 255, 255, 0.08);
+    /* 半透明 */
+    backdrop-filter: blur(12px);
+    /* 毛玻璃核心 */
+    -webkit-backdrop-filter: blur(12px);
+    /* 兼容Safari */
+
+    border-radius: 20px;
+    /* 圆角 */
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+    /* 悬浮感 */
+}
+
+/* 每一年 */
+.award-item {
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+}
+
+/* 年份（视觉锚点） */
+.year {
+    font-size: 22px;
+    font-weight: bold;
+    color: #00c3ff;
+    min-width: 60px;
+}
+
+/* 内容 */
+.content p {
+    margin: 8px 0;
+    color: #ddd;
+}
+
+/* 标签（核心亮点） */
+.tag {
+    margin-left: 10px;
+    padding: 2px 8px;
+    border-radius: 8px;
+    font-size: 12px;
+}
+
+/* 不同级别颜色 */
+.tag.national {
+    background: rgba(255, 80, 80, 0.2);
+    color: #ff6b6b;
+}
+
+.tag.province {
+    background: rgba(0, 195, 255, 0.2);
+    color: #00c3ff;
+}
+
+.tag.school {
+    background: rgba(255, 255, 255, 0.15);
+    color: #ccc;
+}
+
+/* hover 动效（微交互） */
+.award-item:hover {
+    transform: translateX(8px);
+    transition: 0.3s;
+}
+
+/* ===== 科研容器（磨砂背景） ===== */
+.research-list {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+
+    padding: 25px 30px;
+    margin-top: 20px;
+
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+}
+
+/* 单个科研项（变成可点击卡片） */
+.research-item {
+    display: block;
+    text-decoration: none;
+
+    padding: 15px 10px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+
+    transition: 0.3s;
+}
+
+/* hover 效果 */
+.research-item:hover {
+    transform: translateX(8px);
+    background: rgba(255, 255, 255, 0.05);
+}
+
+/* 标题 */
+.research-item .title {
+    font-size: 18px;
+    font-weight: 600;
+    color: #fff;
+}
+
+/* 元信息 */
+.meta {
+    margin-top: 5px;
+    font-size: 13px;
+    color: #aaa;
+}
+
+.venue {
+    margin-left: 10px;
+    color: #00c3ff;
+}
+
+/* 描述 */
+.desc {
+    margin-top: 8px;
+    color: #ccc;
+    line-height: 1.5;
+}
+
+a,
+a:hover,
+a:focus,
+a:active {
+    text-decoration: none;
+}
